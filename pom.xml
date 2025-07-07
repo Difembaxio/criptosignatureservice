@@ -11,6 +11,7 @@
 
   <modules>
   <module>securityservice</module>
+  <module>userService</module>
   </modules>
 
   <properties>
