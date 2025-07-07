@@ -12,6 +12,7 @@
   <modules>
   <module>securityservice</module>
   <module>userService</module>
+    <module>documentService</module>
   </modules>
 
   <properties>
@@ -32,6 +33,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>
