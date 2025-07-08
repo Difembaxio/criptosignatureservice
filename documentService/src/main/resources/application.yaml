@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: documentService
+  datasource:
+    url: jdbc:postgresql://localhost:5435/documentService_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+
+

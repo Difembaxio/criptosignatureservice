@@ -12,7 +12,8 @@
   <modules>
   <module>securityservice</module>
   <module>userService</module>
-    <module>documentService</module>
+  <module>documentService</module>
+  <module>rabbitMqServer</module>
   </modules>
 
   <properties>

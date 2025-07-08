@@ -36,4 +36,8 @@ public class UserMapper {
     public RoleChangeDto toRoleChangeDto(User user){
         return modelMapper.map(user, RoleChangeDto.class);
     }
+
+    public UserRabbitDto toUserRabbitDto(User user){
+        return modelMapper.map(user, UserRabbitDto.class);
+    }
 }

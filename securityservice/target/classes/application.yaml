@@ -1,7 +1,13 @@
 spring:
   application:
     name: securityservice
-
+  datasource:
+    url: jdbc:postgresql://localhost:5433/security
+    username: security
+    password: security
+  flyway:
+    schemas:
+      - public
   security:
     oauth2:
       client:
@@ -11,9 +17,9 @@ spring:
             user-name-attribute: preferred_username
         registration:
           keycloak:
-            client-id: security-app
-            client-secret: WsHUVZpKjhoMwXjHE6MMrt9HUBsvF6Fa
+            client-id: criptos-service client
+            client-secret: IFOV7MyHA5Ibhvo8beY8N4ikfHJ5wgXo
             scope:
               - openid
-              - security_service
+              - criptos-service_client_scope
               - microprofile-jwr

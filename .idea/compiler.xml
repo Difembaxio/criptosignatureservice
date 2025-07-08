@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="documentService" />
+        <module name="rabbitMqServer" />
         <module name="securityservice" />
         <module name="userService" />
       </profile>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="criptosignatureservice" options="-parameters" />
       <module name="documentService" options="-parameters" />
+      <module name="rabbitMqServer" options="-parameters" />
       <module name="securityservice" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>

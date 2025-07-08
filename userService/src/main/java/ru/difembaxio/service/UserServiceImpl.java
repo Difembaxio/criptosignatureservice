@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import ru.difembaxio.config.RabbitMqConfiguration;
 import ru.difembaxio.dto.PasswordChangeDto;
 import ru.difembaxio.dto.RoleChangeDto;
 import ru.difembaxio.dto.UserCreateDto;
 import ru.difembaxio.dto.UserDto;
 import ru.difembaxio.dto.UserMapper;
+import ru.difembaxio.dto.UserRabbitDto;
 import ru.difembaxio.exception.InvalidPasswordException;
 import ru.difembaxio.exception.UserChangeRoleException;
 import ru.difembaxio.exception.UserExistsByEmailException;
@@ -25,6 +28,7 @@ import ru.difembaxio.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RabbitMQProducer rabbitMQProducer;
     private final UserMapper userMapper;
 
     @Override
@@ -55,6 +59,9 @@ public class UserServiceImpl implements UserService {
         userFromDb.setRole(Role.USER);
         log.info("Пользователь с username: {} успешно зарегистрирован",
             userCreateDto.getUsername());
+
+        UserRabbitDto userRabbitDto = userMapper.toUserRabbitDto(userFromDb);
+        rabbitMQProducer.sendMessage(userRabbitDto);
         return userMapper.toDto(userRepository.save(userFromDb));
     }
 
