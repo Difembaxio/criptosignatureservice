@@ -1,0 +1,11 @@
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\config\ModelMapperConfig.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\config\RabbitMQConfiguration.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\DocumentServiceApplication.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\dto\SignerDto.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\model\Document.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\model\ModelMapperDocumentsDto.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\model\Signature.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\model\Signer.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\model\Status.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\repository\SignerRepository.java
+C:\Users\zaxol\OneDrive\Рабочий стол\criptosignatureservice\documentService\src\main\java\ru\difembaxio\service\RabbitMqListener.java

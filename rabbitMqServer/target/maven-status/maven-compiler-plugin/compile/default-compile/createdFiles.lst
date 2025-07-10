@@ -1,0 +1,4 @@
+ru\difembaxio\model\UserRabbitDto.class
+ru\difembaxio\configuration\RabbitMqConfiguration.class
+ru\difembaxio\RabbitMqServerApplication.class
+ru\difembaxio\util\RabbitMqListener.class

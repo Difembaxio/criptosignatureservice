@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
-import ru.difembaxio.config.RabbitMqConfiguration;
 import ru.difembaxio.dto.PasswordChangeDto;
 import ru.difembaxio.dto.RoleChangeDto;
 import ru.difembaxio.dto.UserCreateDto;
@@ -28,7 +27,7 @@ import ru.difembaxio.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RabbitMQProducer rabbitMQProducer;
+    private final RabbitTemplate rabbitTemplate;
     private final UserMapper userMapper;
 
     @Override
@@ -61,7 +60,7 @@ public class UserServiceImpl implements UserService {
             userCreateDto.getUsername());
 
         UserRabbitDto userRabbitDto = userMapper.toUserRabbitDto(userFromDb);
-        rabbitMQProducer.sendMessage(userRabbitDto);
+        rabbitTemplate.convertAndSend("myExchange","routingKeyQueue1",userRabbitDto);
         return userMapper.toDto(userRepository.save(userFromDb));
     }
 

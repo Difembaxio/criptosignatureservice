@@ -1,0 +1,11 @@
+ru\difembaxio\dto\SignerDto.class
+ru\difembaxio\model\ModelMapperDocumentsDto.class
+ru\difembaxio\config\ModelMapperConfig.class
+ru\difembaxio\model\Signature.class
+ru\difembaxio\model\Document.class
+ru\difembaxio\model\Status.class
+ru\difembaxio\model\Signer.class
+ru\difembaxio\repository\SignerRepository.class
+ru\difembaxio\config\RabbitMQConfiguration.class
+ru\difembaxio\DocumentServiceApplication.class
+ru\difembaxio\service\RabbitMqListener.class

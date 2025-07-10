@@ -18,22 +18,24 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfiguration {
 
     private static final String QUEUE1 = "queue1";
+    private static final String QUEUE2 = "queue2";
+    private static final String QUEUE3 = "queue3";
     private static final String EXCHANGE_NAME = "myExchange";
 
     private static final String ROUTING_KEY = "routingKeyQueue1";
 
-    @Value("${rabbitmq.host}")
+    @Value("localhost")
     private String rabbitHost;
 
-    @Value("${rabbitmq.port}")
+    @Value("5672")
     private int rabbitPort;
 
-    @Value("${rabbitmq.username}")
+    @Value("guest")
     private String rabbitUserName;
 
-    @Value("${rabbitmq.password}")
+    @Value("guest")
     private String rabbitPassword;
-    @Value("${rabbitmq.virtual-host}")
+    @Value("/")
     private String rabbitVirtualHost;
 
 
@@ -72,11 +74,11 @@ public class RabbitMqConfiguration {
         return new Queue(QUEUE1);
     }
 
+
     @Bean
-    public Binding bindingQueue(Queue queue, DirectExchange directExchange){
-        return BindingBuilder
-            .bind(queue)
-            .to(directExchange)
+    public Binding bindingQueue1(){
+        return BindingBuilder.bind(myQueue())
+            .to(directExchange())
             .with(ROUTING_KEY);
     }
 }

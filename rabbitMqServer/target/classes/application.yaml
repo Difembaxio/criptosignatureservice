@@ -4,11 +4,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: myuser
-    password: mypassword
-    template:
-      routing-key: testRoutingKey
-      exchange: testExchange
-    virtual-host: host
+    username: guest
+    password: guest
+    virtual-host: /
 server:
   port: 9090
