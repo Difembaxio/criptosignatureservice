@@ -6,5 +6,7 @@ import lombok.Data;
 public class SignerDto {
     private String username;
     private String email;
-    private String role;
+    private String firstname;
+    private String lastname;
+    private String phone;
 }

@@ -1,9 +1,10 @@
-package ru.difembaxio.model;
+package ru.difembaxio.dto;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import ru.difembaxio.dto.SignerDto;
+import ru.difembaxio.model.Document;
+import ru.difembaxio.model.Signer;
 
 @Component
 @RequiredArgsConstructor
@@ -13,5 +14,12 @@ public class ModelMapperDocumentsDto {
 
     public Signer toSigner(SignerDto signerDto) {
         return modelMapper.map(signerDto, Signer.class);
+    }
+
+    public DocumentDto toDto(Document document){
+        return modelMapper.map(document, DocumentDto.class);
+    }
+    public Document toDocument (DocumentDto documentDto){
+        return modelMapper.map(documentDto, Document.class);
     }
 }
