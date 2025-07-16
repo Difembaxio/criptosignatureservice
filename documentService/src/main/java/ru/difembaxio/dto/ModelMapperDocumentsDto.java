@@ -16,7 +16,7 @@ public class ModelMapperDocumentsDto {
         return modelMapper.map(signerDto, Signer.class);
     }
 
-    public DocumentDto toDto(Document document){
+    public  DocumentDto toDto(Document document){
         return modelMapper.map(document, DocumentDto.class);
     }
     public Document toDocument (DocumentDto documentDto){

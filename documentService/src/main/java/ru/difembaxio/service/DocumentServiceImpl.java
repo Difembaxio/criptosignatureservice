@@ -2,10 +2,11 @@ package ru.difembaxio.service;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ import ru.difembaxio.repository.SignerRepository;
 
 @Service
 @RequiredArgsConstructor
-public class DocumentServiceImpl implements DocumentService{
+public class DocumentServiceImpl implements DocumentService {
 
     private final SignerRepository signerRepository;
     private final DocumentRepository documentRepository;
@@ -32,8 +33,8 @@ public class DocumentServiceImpl implements DocumentService{
     @Override
     public DocumentDto crateDocument(String signerName, DocumentDto documentDto) {
         Signer signerFromDb = signerRepository.findByUsernameIgnoreCase(signerName)
-            .orElseThrow(()-> new SignerNotFoundException
-                (String.format("Подписан с именем %s не найден",signerName)));
+            .orElseThrow(() -> new SignerNotFoundException
+                (String.format("Подписан с именем %s не найден", signerName)));
         Document documentFromDb = mapperDocumentsDto.toDocument(documentDto);
         documentFromDb.setAlgorithm("SHA256withRSA");
         documentFromDb.setCreatedAt(LocalDateTime.now());
@@ -60,6 +61,7 @@ public class DocumentServiceImpl implements DocumentService{
     @Override
     public byte[] signDocument(Long documentId, String signerName) {
         String encryptedPrivateKey = getSignerPrivateKey(signerName);
+
         try {
             byte[] privateKeyBytes = Base64.getDecoder().decode(encryptedPrivateKey);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyBytes);
@@ -69,7 +71,6 @@ public class DocumentServiceImpl implements DocumentService{
             Document document = documentRepository.findById(documentId)
                 .orElseThrow(() -> new DocumentNotFoundException(
                     String.format("Документ с ID %d не найден", documentId)));
-
             if (!document.getSigner().getUsername().equalsIgnoreCase(signerName)) {
                 throw new IllegalArgumentException("Документ не принадлежит указанному подписанту");
             }
@@ -77,7 +78,11 @@ public class DocumentServiceImpl implements DocumentService{
             signature.initSign(privateKey);
             signature.update(document.getContent());
             byte[] signedBytes = signature.sign();
-
+            String base64PublicKey = document.getSigner().getPublic_key();
+            boolean isValid = verifySignature(document.getContent(), signedBytes, base64PublicKey);
+            if (!isValid) {
+                throw new RuntimeException("Подпись недействительна, сохранение отменено");
+            }
             document.setSignature(signedBytes);
             documentRepository.save(document);
             return signedBytes;
@@ -87,17 +92,31 @@ public class DocumentServiceImpl implements DocumentService{
     }
 
     @Override
-    public List<DocumentDto> getDocumentsBySigner(Long signerId) {
-        return null;
+    public List<Document> getDocumentsBySigner(Long signerId) {
+        return documentRepository.getDocumentListBySigner(signerId);
     }
 
     @Override
     public boolean verifySignature(byte[] content, byte[] signature, String base64PublicKey) {
-        return false;
+        try {
+            byte[] publicKeyBytes = Base64.getDecoder().decode(base64PublicKey);
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+            Signature sig = Signature.getInstance("SHA256withRSA");
+            sig.initVerify(publicKey);
+            sig.update(content);
+
+            return sig.verify(signature);
+        } catch (Exception e) {
+            throw new RuntimeException("Ошибка при проверке подписи: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void deleteDocumentBySigner(Long signerId) {
-
+        Document documentFromDb = documentRepository.getDocumentsBySignerId(signerId);
+        documentRepository.delete(documentFromDb);
     }
 }

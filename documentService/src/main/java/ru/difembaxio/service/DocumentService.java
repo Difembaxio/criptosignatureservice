@@ -13,7 +13,7 @@ public interface DocumentService {
 
     String getSignerPrivateKey(String signerName);
     public byte[] signDocument(Long documentId, String signerName);
-    List<DocumentDto> getDocumentsBySigner(Long signerId);
+    List<Document> getDocumentsBySigner(Long signerId);
     boolean verifySignature(byte[] content, byte[] signature, String base64PublicKey);
 
     void deleteDocumentBySigner(Long signerId);
